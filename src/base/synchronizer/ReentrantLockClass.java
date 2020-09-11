@@ -1,6 +1,7 @@
 package base.synchronizer;
 
 import java.util.LinkedList;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -8,23 +9,29 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @Description 重入锁
+ *              1.是一种递归无阻塞的同步机制
+ *              2.比synchronized更强大、灵活的锁机制，可以减少死锁发生的概率
+ *              3.分为公平锁、非公平锁
+ *              4.底层采用AQS实现，通过内部Sync继承AQS
  * @Author cgh
  * @Date 2020-04-17 上午 8:57
  */
 public class ReentrantLockClass {
-    private static final Lock fairlock = new ReentrantLock(true);
-    private static final Lock unfairlock = new ReentrantLock(false);
+
+
 
     public static void main(String[] args) {
 
 //        fairMethod();
 //        unfairMethod();
 //        ResponseInterruptMethod();
-        tryLockMethod();
-//        conditionMethod();
+//        tryLockMethod();
+        conditionMethod();
 //        blockQueueMethod();
     }
     //--------------------------------------------公平锁测试-------------------------------------------
+    private static final Lock fairlock = new ReentrantLock(true);
+
     private static void fairMethod() {
         new Thread(() -> fairlockTest(),"线程A").start();
         new Thread(() -> fairlockTest(),"线程B").start();
@@ -51,6 +58,8 @@ public class ReentrantLockClass {
 
 
     //------------------------------------------------非公平锁测试-------------------------------------
+    private static final Lock unfairlock = new ReentrantLock(false);
+
     private static void unfairMethod() {
         new Thread(() -> unfairlockTest(),"线程A").start();
         new Thread(() -> unfairlockTest(),"线程B").start();
