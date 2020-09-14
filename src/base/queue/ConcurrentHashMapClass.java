@@ -2,7 +2,6 @@ package base.queue;
 
 import sun.rmi.runtime.Log;
 
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -52,6 +51,5 @@ public class ConcurrentHashMapClass {
         for (Map.Entry<Long, String> entry : conMap.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
-
     }
 }
